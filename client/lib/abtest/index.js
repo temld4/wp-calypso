@@ -78,6 +78,7 @@ ABTest.prototype.init = function( name ) {
 	}
 
 	const variationDetails = testConfig.variations;
+	const assignmentMethod = ( typeof testConfig.assignmentMethod !== 'undefined' ) ? testConfig.assignmentMethod : 'default';
 	const variationNames = keys( variationDetails );
 	if ( ! variationDetails || variationNames.length === 0 ) {
 		throw new Error( 'No A/B test variations found for ' + name );
@@ -113,6 +114,7 @@ ABTest.prototype.init = function( name ) {
 	this.variationDetails = variationDetails;
 	this.defaultVariation = testConfig.defaultVariation;
 	this.variationNames = variationNames;
+	this.assignmentMethod = assignmentMethod;
 	this.experimentId = name + '_' + variationDatestamp;
 
 	this.allowExistingUsers = testConfig.allowExistingUsers === true;
@@ -216,14 +218,24 @@ ABTest.prototype.getSavedVariation = function() {
 };
 
 ABTest.prototype.assignVariation = function() {
-	let variationName;
+	let variationName, randomAllocationAmount, userid;
 	let sum = 0;
 
 	const allocationsTotal = reduce( this.variationDetails, ( allocations, allocation ) => {
 		return allocations + allocation;
 	}, 0 );
 
-	const randomAllocationAmount = Math.random() * allocationsTotal;
+	if ( typeof user !== 'undefined' && typeof user.data !== 'undefined' ) {
+		userid = Number( user.data.ID );
+	} else {
+		userid = Number( 'noUserObject' );
+	}
+
+	if ( this.assignmentMethod === 'userid' && ! isNaN( userid ) ) {
+		randomAllocationAmount = userid % allocationsTotal;
+	} else {
+		randomAllocationAmount = Math.random() * allocationsTotal;
+	}
 
 	for ( variationName in this.variationDetails ) {
 		sum += this.variationDetails[ variationName ];
