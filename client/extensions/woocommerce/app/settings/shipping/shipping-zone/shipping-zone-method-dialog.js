@@ -78,7 +78,7 @@ const ShippingZoneDialog = ( { siteId, method, methodTypeOptions, translate, isV
 			action: 'delete',
 			label: <span><Gridicon icon="trash" /> { translate( 'Delete this method' ) }</span>,
 			onClick: onDelete,
-			additionalClassNames: 'shipping-zone__method-delete is-borderless'
+			additionalClassNames: 'shipping-zone__method-delete is-scary is-borderless'
 		},
 		{ action: 'cancel', label: translate( 'Cancel' ) },
 		{ action: 'add', label: translate( 'Save' ), onClick: onClose, isPrimary: true },
@@ -95,6 +95,7 @@ const ShippingZoneDialog = ( { siteId, method, methodTypeOptions, translate, isV
 			</div>
 			<FormFieldSet>
 				<FormFieldSet>
+					<FormLabel>{ translate( 'Payment method' ) }</FormLabel>
 					<FormSelect
 						className="shipping-zone__method-type-select"
 						value={ methodType }
@@ -103,7 +104,7 @@ const ShippingZoneDialog = ( { siteId, method, methodTypeOptions, translate, isV
 					</FormSelect>
 				</FormFieldSet>
 				<FormFieldSet>
-					<FormLabel>{ translate( 'Title:' ) }</FormLabel>
+					<FormLabel>{ translate( 'Title' ) }</FormLabel>
 					<FormTextInput
 						placeholder={ translate( 'Title' ) }
 						value={ title || '' }
@@ -111,7 +112,7 @@ const ShippingZoneDialog = ( { siteId, method, methodTypeOptions, translate, isV
 				</FormFieldSet>
 				<FormFieldSet>
 					<FormLabel>
-						{ translate( 'Enabled: {{toggle/}}', {
+						{ translate( 'Enabled {{toggle/}}', {
 							components: {
 								toggle: <FormToggle checked={ enabled } onChange={ onEnabledChange } />
 							}
