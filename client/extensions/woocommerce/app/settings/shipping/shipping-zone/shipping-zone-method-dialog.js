@@ -93,6 +93,15 @@ const ShippingZoneDialog = ( { siteId, method, methodTypeOptions, translate, isV
 			<div className="shipping-zone__method-dialog-header">
 				{ translate( 'Edit shipping method' ) }
 			</div>
+			<FormFieldSet className="shipping-zone__enable">
+				<FormLabel>
+					{ translate( 'Enabled {{toggle/}}', {
+						components: {
+							toggle: <FormToggle checked={ enabled } onChange={ onEnabledChange } />
+						}
+					} ) }
+				</FormLabel>
+			</FormFieldSet>
 			<FormFieldSet>
 				<FormFieldSet>
 					<FormLabel>{ translate( 'Payment method' ) }</FormLabel>
@@ -109,15 +118,6 @@ const ShippingZoneDialog = ( { siteId, method, methodTypeOptions, translate, isV
 						placeholder={ translate( 'Title' ) }
 						value={ title || '' }
 						onChange={ onMethodTitleChange } />
-				</FormFieldSet>
-				<FormFieldSet>
-					<FormLabel>
-						{ translate( 'Enabled {{toggle/}}', {
-							components: {
-								toggle: <FormToggle checked={ enabled } onChange={ onEnabledChange } />
-							}
-						} ) }
-					</FormLabel>
 				</FormFieldSet>
 				{ renderMethodSettingsView( method, siteId ) }
 			</FormFieldSet>

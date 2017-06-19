@@ -93,3 +93,18 @@
 	padding: 0 0 24px 0;
 	font-size: 18px;
 }
+
+.shipping-zone__enable {
+	position: absolute;
+	top: 30px;
+	right: 16px;
+	
+	.form-label {
+		color: $gray;
+		font-size: 11px;
+		line-height: 16px;
+		vertical-align: top;
+		text-transform: uppercase;
+		font-weight: normal;	
+	}
+}
