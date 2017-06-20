@@ -5,6 +5,11 @@
 	margin-top: 58px;
 }
 
+.shipping__zones-header,
+.shipping__packages-header {
+	font-weight: 700;
+}
+
 .shipping__credit-card-description {
 	margin-bottom: 4px;
 	color: $gray-text-min;
@@ -58,30 +63,36 @@
 	text-align: center;
 
 	svg {
-		margin-top: 4px;
+		margin-top: 6px;
+		width: 24px;
 	}
 }
 
 .shipping__zones-row-location {
-	width: 35%;
+	width: 25%;
 }
 
 .shipping__zones-row-location-name,
 .shipping__packages-row-details-name {
 	margin-bottom: 0;
-	font-size: 16px;
+	font-size: 14px;
+}
+
+.shipping__zones-row-method {
+	font-size: 12px;
 }
 
 .shipping__zones-row-location-description,
 .shipping__zones-row-method-description,
-.shipping__card-name {
+.shipping__card-name,
+.shipping__packages-row-dimensions {
 	margin-bottom: 0;
 	color: $gray-text-min;
-	font-size: 13px;
+	font-size: 12px;
 }
 
 .shipping__zones-row-methods {
-	width: 35%;
+	width: 45%;
 }
 
 .shipping__zones-row-method:not( :last-child ) {
