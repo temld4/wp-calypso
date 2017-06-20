@@ -18,14 +18,34 @@
 	align-items: baseline;
 }
 
-.shipping-zone__method-title {
-	margin-right: 14px;
-	font-size: 14px;
-}
+.shipping-zone__methods-container {
+	.list-header,
+	.list-item {
+		justify-content: flex-start;
+	}
 
-.shipping-zone__method-summary {
-	color: $gray-text-min;
-	font-size: 13px;
+	.list-item-field {
+		width: 33.3%;
+		justify-content: left;
+		align-items: center;
+	}
+
+	.shipping-zone__method-title {
+		margin-right: 14px;
+		font-size: 14px;
+		width: 30%;
+	}
+
+	.shipping-zone__method-summary {
+		color: $gray-text-min;
+		font-size: 13px;
+		width: 50%;
+	}
+
+	.shipping-zone__method-button {
+		width: 20%;
+		justify-content: flex-end;
+	}
 }
 
 &.shipping-zone__method-dialog {
@@ -98,13 +118,13 @@
 	position: absolute;
 	top: 30px;
 	right: 16px;
-	
+
 	.form-label {
 		color: $gray;
 		font-size: 11px;
 		line-height: 16px;
 		vertical-align: top;
 		text-transform: uppercase;
-		font-weight: normal;	
+		font-weight: normal;
 	}
 }

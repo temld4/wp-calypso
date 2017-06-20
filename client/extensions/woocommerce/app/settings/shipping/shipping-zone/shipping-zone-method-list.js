@@ -13,6 +13,7 @@ import Button from 'components/button';
 import ExtendedHeader from 'woocommerce/components/extended-header';
 import List from 'woocommerce/components/list/list';
 import ListItem from 'woocommerce/components/list/list-item';
+import ListHeader from 'woocommerce/components/list/list-header';
 import ListItemField from 'woocommerce/components/list/list-item-field';
 import ShippingZoneMethodDialog from './shipping-zone-method-dialog';
 import Spinner from 'components/spinner';
@@ -32,11 +33,13 @@ const ShippingZoneMethodList = ( { siteId, loaded, methods, newMethodTypeOptions
 
 		return (
 			<ListItem key={ index } >
-				<ListItemField>
-					<span className="shipping-zone__method-title">{ method.title }</span>
-					<span className="shipping-zone__method-summary">{ getMethodSummary( method ) }</span>
+				<ListItemField className="shipping-zone__method-title">
+					{ method.title }
 				</ListItemField>
-				<ListItemField>
+				<ListItemField className="shipping-zone__method-summary">
+					{ getMethodSummary( method ) }
+				</ListItemField>
+				<ListItemField className="shipping-zone__method-add">
 					<Button compact onClick={ onEditClick }>{ translate( 'Edit' ) }</Button>
 				</ListItemField>
 			</ListItem>
@@ -74,6 +77,14 @@ const ShippingZoneMethodList = ( { siteId, loaded, methods, newMethodTypeOptions
 				description={ translate( 'Any customers that reside in the locations' +
 					' defined above will have access to these shipping methods' ) } />
 			<List>
+				<ListHeader>
+					<ListItemField className="shipping-zone__methods-column-title">
+						{ translate( 'Method' ) }
+					</ListItemField>
+					<ListItemField className="shipping-zone__methods-column-summary">
+						{ translate( 'Cost' ) }
+					</ListItemField>
+				</ListHeader>
 				{ renderContent() }
 			</List>
 			<ShippingZoneMethodDialog siteId={ siteId } onChange={ onChange } />
