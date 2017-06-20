@@ -80,6 +80,7 @@
 
 .shipping__zones-row-method {
 	font-size: 12px;
+	display: flex;
 }
 
 .shipping__zones-row-location-description,
@@ -89,6 +90,14 @@
 	margin-bottom: 0;
 	color: $gray-text-min;
 	font-size: 12px;
+}
+
+.shipping__zones-row-method-description {
+	margin-left: 4px;
+
+	&:before {
+		content: "- "
+	}
 }
 
 .shipping__zones-row-methods {

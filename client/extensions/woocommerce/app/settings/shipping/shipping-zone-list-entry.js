@@ -32,7 +32,7 @@ const ShippingZoneEntry = ( { translate, id, name, methods, site } ) => {
 	return (
 		<div className="shipping__zones-row">
 			<div className="shipping__zones-row-icon">
-				<Gridicon icon={ icon } size={ 36 } />
+				<Gridicon icon={ icon } size={ 24 } />
 			</div>
 			<div className="shipping__zones-row-location">
 				<p className="shipping__zones-row-location-name">{ name }</p>
