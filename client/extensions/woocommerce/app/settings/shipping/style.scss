@@ -66,8 +66,13 @@
 
 .shipping__zones-row-icon,
 .shipping__packages-row-icon  {
-	width: 10%;
-	text-align: center;
+	width: 48px;
+	text-align: left;
+	padding-left: 16px;
+
+	@include breakpoint( ">480px" ) {
+		padding-left: 24px;
+	}
 
 	svg {
 		margin-top: 6px;
