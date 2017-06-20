@@ -82,7 +82,7 @@ const ShippingZoneMethodList = ( { siteId, loaded, methods, newMethodTypeOptions
 						{ translate( 'Method' ) }
 					</ListItemField>
 					<ListItemField className="shipping-zone__methods-column-summary">
-						{ translate( 'Cost' ) }
+						{ translate( 'Details' ) }
 					</ListItemField>
 				</ListHeader>
 				{ renderContent() }

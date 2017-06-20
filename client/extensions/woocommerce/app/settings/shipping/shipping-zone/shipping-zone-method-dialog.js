@@ -16,7 +16,7 @@ import FormFieldSet from 'components/forms/form-fieldset';
 import FormLabel from 'components/forms/form-label';
 import FormSelect from 'components/forms/form-select';
 import FormTextInput from 'components/forms/form-text-input';
-import FormToggle from 'components/forms/form-toggle';
+import FormToggle from 'components/forms/form-toggle/compact';
 import FreeShipping from './shipping-methods/free-shipping';
 import LocalPickup from './shipping-methods/local-pickup';
 import {
@@ -40,8 +40,14 @@ const ShippingZoneDialog = ( { siteId, method, methodTypeOptions, translate, isV
 		return null;
 	}
 
-	const { enabled, methodType, title, } = method;
-	const onCancel = () => ( actions.cancelShippingZoneMethod( siteId ) );
+	const { enabled, methodType, title, isNew } = method;
+	const onCancel = () => {
+		if ( isNew ) {
+			actions.removeMethodFromShippingZone( siteId, method.id );
+			return;
+		}
+		actions.cancelShippingZoneMethod( siteId );
+	};
 	const onClose = () => {
 		onChange();
 		actions.closeShippingZoneMethod( siteId );
@@ -74,15 +80,18 @@ const ShippingZoneDialog = ( { siteId, method, methodTypeOptions, translate, isV
 	};
 
 	const buttons = [
-		{
+		{ action: 'cancel', label: translate( 'Cancel' ) },
+		{ action: 'add', label: translate( 'Save' ), onClick: onClose, isPrimary: true },
+	];
+
+	if ( ! isNew ) {
+		buttons.unshift( {
 			action: 'delete',
 			label: <span><Gridicon icon="trash" /> { translate( 'Delete this method' ) }</span>,
 			onClick: onDelete,
 			additionalClassNames: 'shipping-zone__method-delete is-scary is-borderless'
-		},
-		{ action: 'cancel', label: translate( 'Cancel' ) },
-		{ action: 'add', label: translate( 'Save' ), onClick: onClose, isPrimary: true },
-	];
+		} );
+	}
 
 	return (
 		<Dialog
@@ -91,7 +100,7 @@ const ShippingZoneDialog = ( { siteId, method, methodTypeOptions, translate, isV
 			buttons={ buttons }
 			onClose={ onCancel } >
 			<div className="shipping-zone__method-dialog-header">
-				{ translate( 'Edit shipping method' ) }
+				{ isNew ? translate( 'Add shipping method' ) : translate( 'Edit shipping method' ) }
 			</div>
 			<FormFieldSet className="shipping-zone__enable">
 				<FormLabel>
