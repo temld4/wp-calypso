@@ -88,6 +88,11 @@
 .shipping__zones-row-method {
 	font-size: 12px;
 	display: flex;
+	flex-direction: column;
+
+	@include breakpoint( ">960px" ) {
+		flex-direction: row;
+	}
 }
 
 .shipping__zones-row-location-description,
@@ -100,10 +105,8 @@
 }
 
 .shipping__zones-row-method-description {
-	margin-left: 4px;
-
-	&:before {
-		content: "- "
+	@include breakpoint( ">960px" ) {
+		margin-left: 4px;
 	}
 }
 
