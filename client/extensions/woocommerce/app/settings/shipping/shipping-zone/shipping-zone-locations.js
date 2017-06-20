@@ -36,7 +36,12 @@ const ShippingZoneLocations = ( { loaded, translate } ) => {
 		<div className="shipping-zone__locations">
 			<ExtendedHeader
 				label={ translate( 'Zone locations' ) }
-				description={ translate( 'Add locations that you want to share shipping methods' ) } />
+				description={ translate( 'Add locations that you want to share shipping methods' ) }
+				buttonText={ translate( 'Add location' ) }
+				buttonAction={ function() {
+					console.log( 'Button clicked' );
+				} } />
+
 			<List>
 				{ renderContent() }
 			</List>

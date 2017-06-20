@@ -75,7 +75,11 @@ const ShippingZoneMethodList = ( { siteId, loaded, methods, newMethodTypeOptions
 			<ExtendedHeader
 				label={ translate( 'Shipping methods' ) }
 				description={ translate( 'Any customers that reside in the locations' +
-					' defined above will have access to these shipping methods' ) } />
+					' defined above will have access to these shipping methods' ) }
+				buttonText={ translate( 'Add method' ) }
+				buttonAction={ function() {
+					console.log( 'Button clicked' );
+				} } />
 			<List>
 				<ListHeader>
 					<ListItemField className="shipping-zone__methods-column-title">
