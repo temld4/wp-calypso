@@ -2,15 +2,17 @@
  * External dependencies
  */
 import React, { Component } from 'react';
+import { localize } from 'i18n-calypso';
 
 /**
  * Internal dependencies
  */
 import SectionHeader from 'components/section-header';
+import Button from 'components/button';
 
 class ExtendedHeader extends Component {
 	render() {
-		const { label, description, children } = this.props;
+		const { label, description, children, buttonAction, buttonText } = this.props;
 
 		const labelContent = (
 			<div>
@@ -20,8 +22,15 @@ class ExtendedHeader extends Component {
 		);
 
 		return (
-			<SectionHeader label={ labelContent }>
+			<SectionHeader className="section-header-extended" label={ labelContent }>
 				{ children }
+				{
+					buttonText && buttonAction &&
+						<Button onClick={ buttonAction }>
+							{ buttonText }
+						</Button>
+				}
+
 			</SectionHeader>
 		);
 	}
