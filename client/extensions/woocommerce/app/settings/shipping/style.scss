@@ -7,14 +7,14 @@
 
 .shipping__zones-header,
 .shipping__packages-header {
-	font-weight: 700;
+	font-weight: 600;
 }
 
 .shipping__credit-card-description {
 	margin-bottom: 4px;
 	color: $gray-text-min;
 	padding-bottom: 8px;
-	font-size: 12px;
+	font-size: 14px;
 	line-height: 18px;
 }
 
@@ -59,9 +59,10 @@
 
 .shipping__zones-header,
 .shipping__packages-header {
-	padding: 8px 0;
-	font-size: 13px;
+	padding: 12px 0;
+	font-size: 14px;
 	border-top: 0;
+	background: lighten( $gray, 35% );
 }
 
 .shipping__zones-row-icon,
@@ -91,7 +92,7 @@
 }
 
 .shipping__zones-row-method {
-	font-size: 12px;
+	font-size: 14px;
 	display: flex;
 	flex-direction: column;
 
@@ -102,11 +103,10 @@
 
 .shipping__zones-row-location-description,
 .shipping__zones-row-method-description,
-.shipping__card-name,
-.shipping__packages-row-dimensions {
+.shipping__card-name {
 	margin-bottom: 0;
 	color: $gray-text-min;
-	font-size: 12px;
+	font-size: 14px;
 }
 
 .shipping__zones-row-method-description {
@@ -120,7 +120,7 @@
 }
 
 .shipping__zones-row-method:not( :last-child ) {
-	margin-bottom: 14px;
+	margin-bottom: 8px;
 }
 
 .shipping__zones-row-method-name {

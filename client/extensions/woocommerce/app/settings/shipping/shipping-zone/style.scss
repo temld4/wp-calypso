@@ -28,6 +28,17 @@
 		justify-content: flex-start;
 	}
 
+	.list-header {
+		background: lighten( $gray, 35% );
+		font-weight: 600;
+		font-size: 14px;
+
+		.list-item-field {
+			padding-top: 12px;
+			padding-bottom: 12px;
+		}
+	}
+
 	.list-item-field {
 		width: 33.3%;
 		justify-content: left;
@@ -41,8 +52,7 @@
 	}
 
 	.shipping-zone__method-summary {
-		color: $gray-text-min;
-		font-size: 13px;
+		font-size: 14px;
 		width: 50%;
 	}
 
