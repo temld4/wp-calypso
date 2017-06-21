@@ -17,7 +17,10 @@ import ListHeader from 'woocommerce/components/list/list-header';
 import ListItemField from 'woocommerce/components/list/list-item-field';
 import ShippingZoneMethodDialog from './shipping-zone-method-dialog';
 import Spinner from 'components/spinner';
-import { getMethodSummary } from 'woocommerce/state/ui/shipping/zones/methods/utils';
+import { getMethodSummary } from './shipping-methods/utils';
+import {
+	getShippingMethodNameMap,
+} from 'woocommerce/state/sites/shipping-methods/selectors';
 import {
 	openShippingZoneMethod,
 	addMethodToShippingZone
@@ -27,7 +30,16 @@ import {
 	getNewMethodTypeOptions,
 } from 'woocommerce/state/ui/shipping/zones/methods/selectors';
 
-const ShippingZoneMethodList = ( { siteId, loaded, methods, newMethodTypeOptions, translate, onChange, actions } ) => {
+const ShippingZoneMethodList = ( {
+		siteId,
+		loaded,
+		methods,
+		methodNamesMap,
+		newMethodTypeOptions,
+		translate,
+		onChange,
+		actions,
+	} ) => {
 	const renderMethod = ( method, index ) => {
 		const onEditClick = () => ( actions.openShippingZoneMethod( siteId, method.id ) );
 
@@ -63,7 +75,9 @@ const ShippingZoneMethodList = ( { siteId, loaded, methods, newMethodTypeOptions
 			return;
 		}
 		onChange();
-		actions.addMethodToShippingZone( siteId, newMethodTypeOptions[ 0 ] );
+
+		const newType = newMethodTypeOptions[ 0 ];
+		actions.addMethodToShippingZone( siteId, newType, methodNamesMap( newType ) );
 	};
 
 	return (
@@ -98,6 +112,7 @@ ShippingZoneMethodList.propTypes = {
 export default connect(
 	( state ) => ( {
 		methods: getCurrentlyEditingShippingZoneMethods( state ),
+		methodNamesMap: getShippingMethodNameMap( state ),
 		newMethodTypeOptions: getNewMethodTypeOptions( state ),
 	} ),
 	( dispatch ) => ( {

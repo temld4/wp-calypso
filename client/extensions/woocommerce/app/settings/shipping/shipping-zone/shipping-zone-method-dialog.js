@@ -20,8 +20,8 @@ import FormToggle from 'components/forms/form-toggle/compact';
 import FreeShipping from './shipping-methods/free-shipping';
 import LocalPickup from './shipping-methods/local-pickup';
 import {
-	getMethodName,
-} from 'woocommerce/state/ui/shipping/zones/methods/utils';
+	getShippingMethodNameMap,
+} from 'woocommerce/state/sites/shipping-methods/selectors';
 import {
 	changeShippingZoneMethodTitle,
 	changeShippingZoneMethodType,
@@ -36,7 +36,17 @@ import {
 	isCurrentlyOpenShippingZoneMethodNew,
 } from 'woocommerce/state/ui/shipping/zones/methods/selectors';
 
-const ShippingZoneDialog = ( { siteId, method, methodTypeOptions, translate, isVisible, isNew, onChange, actions } ) => {
+const ShippingZoneDialog = ( {
+		siteId,
+		method,
+		methodNamesMap,
+		methodTypeOptions,
+		translate,
+		isVisible,
+		isNew,
+		onChange,
+		actions
+	} ) => {
 	if ( ! isVisible ) {
 		return null;
 	}
@@ -58,12 +68,15 @@ const ShippingZoneDialog = ( { siteId, method, methodTypeOptions, translate, isV
 		actions.removeMethodFromShippingZone( siteId, method.id );
 	};
 	const onMethodTitleChange = ( event ) => ( actions.changeShippingZoneMethodTitle( siteId, event.target.value ) );
-	const onMethodTypeChange = ( event ) => ( actions.changeShippingZoneMethodType( siteId, event.target.value ) );
+	const onMethodTypeChange = ( event ) => {
+		const newType = event.target.value;
+		actions.changeShippingZoneMethodType( siteId, newType, methodNamesMap( newType ) );
+	};
 	const onEnabledChange = () => ( actions.toggleOpenedShippingZoneMethodEnabled( siteId, ! enabled ) );
 
 	const renderMethodTypeOptions = () => {
 		return methodTypeOptions.map( ( newMethodId, index ) => (
-			<option value={ newMethodId } key={ index }>{ getMethodName( newMethodId ) }</option>
+			<option value={ newMethodId } key={ index }>{ methodNamesMap( newMethodId ) }</option>
 		) );
 	};
 
@@ -148,6 +161,7 @@ export default connect(
 			method,
 			isVisible: Boolean( method ),
 			isNew: method && isCurrentlyOpenShippingZoneMethodNew( state ),
+			methodNamesMap: getShippingMethodNameMap( state ),
 			methodTypeOptions: method && getMethodTypeChangeOptions( state, method.methodType ),
 		};
 	},
