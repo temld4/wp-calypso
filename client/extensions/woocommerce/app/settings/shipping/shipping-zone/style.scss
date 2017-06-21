@@ -37,33 +37,85 @@
 			padding-top: 12px;
 			padding-bottom: 12px;
 		}
+
+		.shipping-zone__methods-column-title {
+			width: 50%;
+
+			@include breakpoint( ">660px" ) {
+				width: 30%;
+			}
+		}
+
+		.shipping-zone__methods-column-summary {
+			display: none;
+
+			@include breakpoint( ">660px" ) {
+				width: 30%;
+				display: block;
+			}
+		}
 	}
 
 	.list-item-field {
-		width: 33.3%;
 		justify-content: left;
 		align-items: center;
 	}
 
 	.shipping-zone__method-title {
 		font-size: 14px;
-		width: 30%;
+		width: 50%;
+
+		@include breakpoint( ">660px" ) {
+			width: 30%;
+		}
 	}
 
 	.shipping-zone__method-summary {
 		font-size: 14px;
-		width: 40%;
+		width: 30%;
+
+		@include breakpoint( "<660px" ) {
+			width: 100%;
+			order: 4;
+			padding-top: 0px;
+		}
 	}
 
-	.shipping-zone__method-actions {
+	.shipping-zone__enable-container {
 		width: 30%;
-		justify-content: flex-end;
 		color: $gray;
 		font-size: 11px;
+		font-weight: 400;
 		line-height: 16px;
 		vertical-align: top;
 		text-transform: uppercase;
-		font-weight: normal;
+		cursor: pointer;
+
+		@include breakpoint( ">660px" ) {
+			width: 25%;
+		}
+
+		.form-toggle__switch {
+			margin-left: 4px;
+			margin-top: -3px;
+		}
+
+		.form-toggle__label-content {
+			margin-left: 0;
+		}
+	}
+
+	.shipping-zone__method-actions {
+		width: 20%;
+		justify-content: flex-end;
+
+		.button {
+			flex-shrink: 0;
+		}
+
+		@include breakpoint( ">660px" ) {
+			width: 15%;
+		}
 	}
 }
 

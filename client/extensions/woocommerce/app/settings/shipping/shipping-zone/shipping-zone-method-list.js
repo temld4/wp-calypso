@@ -55,7 +55,7 @@ const ShippingZoneMethodList = ( {
 				<ListItemField className="shipping-zone__method-summary">
 					{ getMethodSummary( method, '$' ) }
 				</ListItemField>
-				<ListItemField className="shipping-zone__method-actions">
+				<ListItemField className="shipping-zone__enable-container">
 					<span>
 						{ translate( 'Enabled {{toggle/}}', {
 							components: {
@@ -63,6 +63,8 @@ const ShippingZoneMethodList = ( {
 							}
 						} ) }
 					</span>
+				</ListItemField>
+				<ListItemField className="shipping-zone__method-actions">
 					<Button compact onClick={ onEditClick }>{ translate( 'Edit' ) }</Button>
 				</ListItemField>
 			</ListItem>
