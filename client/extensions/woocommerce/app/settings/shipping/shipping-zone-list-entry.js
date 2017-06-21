@@ -15,7 +15,34 @@ import { getMethodSummary } from './shipping-zone/shipping-methods/utils';
 import { getSelectedSite } from 'state/ui/selectors';
 import { getShippingZoneMethods } from 'woocommerce/state/ui/shipping/zones/methods/selectors';
 
-const ShippingZoneEntry = ( { translate, id, name, methods, site } ) => {
+const ShippingZoneEntry = ( { translate, id, name, methods, loaded, site } ) => {
+	if ( ! loaded ) {
+		return (
+			<div className="shipping__zones-row is-placeholder">
+				<div className="shipping__zones-row-icon">
+					<Gridicon icon="globe" size={ 24 } />
+				</div>
+				<div className="shipping__zones-row-location">
+					<p className="shipping__zones-row-location-name" />
+					<p className="shipping__zones-row-location-description" />
+				</div>
+				<div className="shipping__zones-row-methods" >
+					<div className="shipping__zones-row-method">
+						<p className="shipping__zones-row-method-name" />
+						<p className="shipping__zones-row-method-description" />
+					</div>
+					<div className="shipping__zones-row-method">
+						<p className="shipping__zones-row-method-name" />
+						<p className="shipping__zones-row-method-description" />
+					</div>
+				</div>
+				<div className="shipping__zones-row-actions" >
+					<Button compact>{ translate( 'Edit' ) }</Button>
+				</div>
+			</div>
+		);
+	}
+
 	const renderMethod = ( methodKey ) => {
 		const method = methods[ methodKey ];
 
@@ -51,12 +78,13 @@ const ShippingZoneEntry = ( { translate, id, name, methods, site } ) => {
 
 ShippingZoneEntry.propTypes = {
 	id: PropTypes.oneOfType( [ PropTypes.number, PropTypes.object ] ),
-	name: PropTypes.string
+	name: PropTypes.string,
+	loaded: PropTypes.bool.isRequired,
 };
 
 export default connect(
 	( state, ownProps ) => ( {
 		site: getSelectedSite( state ),
-		methods: getShippingZoneMethods( state, ownProps.id ),
+		methods: ownProps.loaded && getShippingZoneMethods( state, ownProps.id ),
 	} )
 )( localize( ShippingZoneEntry ) );

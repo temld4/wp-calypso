@@ -13,7 +13,6 @@ import Button from 'components/button';
 import Card from 'components/card';
 import ExtendedHeader from 'woocommerce/components/extended-header';
 import ShippingZoneEntry from './shipping-zone-list-entry';
-import Spinner from 'components/spinner';
 import { fetchShippingZones } from 'woocommerce/state/sites/shipping-zones/actions';
 import { areShippingZonesLoaded } from 'woocommerce/state/sites/shipping-zones/selectors';
 import { getLink } from 'woocommerce/lib/nav-utils';
@@ -36,19 +35,13 @@ class ShippingZoneList extends Component {
 	}
 
 	renderContent() {
-		if ( ! this.props.loaded ) {
-			return (
-				<div className="shipping__loading-spinner">
-					<Spinner size={ 24 } />
-				</div>
-			);
-		}
-
-		const { translate, siteId } = this.props;
+		const { translate, siteId, loaded } = this.props;
 
 		const renderShippingZone = ( zone, index ) => {
-			return ( <ShippingZoneEntry key={ index } siteId={ siteId } { ...zone } /> );
+			return ( <ShippingZoneEntry key={ index } siteId={ siteId } loaded={ loaded } { ...zone } /> );
 		};
+
+		const shippingZones = loaded ? this.props.shippingZones : [ {}, {}, {} ];
 
 		return (
 			<div>
@@ -58,7 +51,7 @@ class ShippingZoneList extends Component {
 					<div className="shipping__zones-row-methods">{ translate( 'Shipping methods' ) }</div>
 					<div className="shipping__zones-row-actions" />
 				</div>
-				{ this.props.shippingZones.map( renderShippingZone ) }
+				{ shippingZones.map( renderShippingZone ) }
 			</div>
 		);
 	}

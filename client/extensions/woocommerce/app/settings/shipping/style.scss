@@ -51,6 +51,31 @@
 }
 
 .shipping__zones-row {
+	&.is-placeholder {
+		@include placeholder();
+
+		.gridicon, p, a, button {
+			animation: loading-fade 1.6s ease-in-out infinite;
+			background-color: lighten( $gray, 25% );
+			color: transparent;
+		}
+
+		p {
+			width: 100px;
+			height: 14px;
+		}
+
+		.gridicon {
+			fill: transparent;
+			stroke: transparent;
+		}
+
+		&:last-child {
+			background: lighten( $gray, 30% );
+			border-top: 0;
+		}
+	}
+
 	&:last-child {
 		background: lighten( $gray, 35% );
 		border-top: 1px solid lighten( $gray, 30% );
@@ -189,11 +214,4 @@
 
 .shipping__packages-row-dimensions {
 	width: 35%;
-}
-
-.shipping__loading-spinner {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	padding: 16px;
 }
