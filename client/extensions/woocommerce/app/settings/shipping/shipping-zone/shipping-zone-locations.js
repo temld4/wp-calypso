@@ -10,8 +10,6 @@ import { localize } from 'i18n-calypso';
 import Button from 'components/button';
 import ExtendedHeader from 'woocommerce/components/extended-header';
 import List from 'woocommerce/components/list/list';
-import ListItem from 'woocommerce/components/list/list-item';
-import ListItemField from 'woocommerce/components/list/list-item-field';
 import Spinner from 'components/spinner';
 
 const ShippingZoneLocations = ( { loaded, translate } ) => {

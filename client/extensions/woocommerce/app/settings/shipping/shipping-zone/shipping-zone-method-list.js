@@ -39,7 +39,7 @@ const ShippingZoneMethodList = ( { siteId, loaded, methods, newMethodTypeOptions
 				<ListItemField className="shipping-zone__method-summary">
 					{ getMethodSummary( method ) }
 				</ListItemField>
-				<ListItemField className="shipping-zone__method-add">
+				<ListItemField className="shipping-zone__method-actions">
 					<Button compact onClick={ onEditClick }>{ translate( 'Edit' ) }</Button>
 				</ListItemField>
 			</ListItem>

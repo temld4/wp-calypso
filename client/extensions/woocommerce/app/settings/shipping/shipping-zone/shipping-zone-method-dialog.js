@@ -28,19 +28,20 @@ import {
 	cancelShippingZoneMethod,
 	closeShippingZoneMethod,
 	removeMethodFromShippingZone,
-	toggleShippingZoneMethodEnabled,
+	toggleOpenedShippingZoneMethodEnabled,
 } from 'woocommerce/state/ui/shipping/zones/methods/actions';
 import {
 	getMethodTypeChangeOptions,
-	getCurrentlyOpenShippingZoneMethod
+	getCurrentlyOpenShippingZoneMethod,
+	isCurrentlyOpenShippingZoneMethodNew,
 } from 'woocommerce/state/ui/shipping/zones/methods/selectors';
 
-const ShippingZoneDialog = ( { siteId, method, methodTypeOptions, translate, isVisible, onChange, actions } ) => {
+const ShippingZoneDialog = ( { siteId, method, methodTypeOptions, translate, isVisible, isNew, onChange, actions } ) => {
 	if ( ! isVisible ) {
 		return null;
 	}
 
-	const { enabled, methodType, title, isNew } = method;
+	const { enabled, methodType, title } = method;
 	const onCancel = () => {
 		if ( isNew ) {
 			actions.removeMethodFromShippingZone( siteId, method.id );
@@ -58,7 +59,7 @@ const ShippingZoneDialog = ( { siteId, method, methodTypeOptions, translate, isV
 	};
 	const onMethodTitleChange = ( event ) => ( actions.changeShippingZoneMethodTitle( siteId, event.target.value ) );
 	const onMethodTypeChange = ( event ) => ( actions.changeShippingZoneMethodType( siteId, event.target.value ) );
-	const onEnabledChange = () => ( actions.toggleShippingZoneMethodEnabled( siteId, ! enabled ) );
+	const onEnabledChange = () => ( actions.toggleOpenedShippingZoneMethodEnabled( siteId, ! enabled ) );
 
 	const renderMethodTypeOptions = () => {
 		return methodTypeOptions.map( ( newMethodId, index ) => (
@@ -146,6 +147,7 @@ export default connect(
 		return {
 			method,
 			isVisible: Boolean( method ),
+			isNew: method && isCurrentlyOpenShippingZoneMethodNew( state ),
 			methodTypeOptions: method && getMethodTypeChangeOptions( state, method.methodType ),
 		};
 	},
@@ -156,7 +158,7 @@ export default connect(
 			cancelShippingZoneMethod,
 			closeShippingZoneMethod,
 			removeMethodFromShippingZone,
-			toggleShippingZoneMethodEnabled,
+			toggleOpenedShippingZoneMethodEnabled,
 		}, dispatch )
 	} )
 )( localize( ShippingZoneDialog ) );
