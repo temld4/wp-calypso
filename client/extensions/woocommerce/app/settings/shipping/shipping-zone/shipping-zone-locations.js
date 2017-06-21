@@ -24,24 +24,16 @@ const ShippingZoneLocations = ( { loaded, translate } ) => {
 			);
 		}
 
-		return (
-			<ListItem>
-				<ListItemField>
-					<Button>{ translate( 'Add location' ) }</Button>
-				</ListItemField>
-			</ListItem> );
+		return null;
 	};
 
 	return (
 		<div className="shipping-zone__locations">
 			<ExtendedHeader
 				label={ translate( 'Zone locations' ) }
-				description={ translate( 'Add locations that you want to share shipping methods' ) }
-				buttonText={ translate( 'Add location' ) }
-				buttonAction={ function() {
-					console.log( 'Button clicked' );
-				} } />
-
+				description={ translate( 'Add locations that you want to share shipping methods' ) } >
+				<Button>{ translate( 'Add location' ) }</Button>
+			</ExtendedHeader>
 			<List>
 				{ renderContent() }
 			</List>

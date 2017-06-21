@@ -55,19 +55,15 @@ const ShippingZoneMethodList = ( { siteId, loaded, methods, newMethodTypeOptions
 			);
 		}
 
-		const onAddMethod = () => {
-			onChange();
-			actions.addMethodToShippingZone( siteId, newMethodTypeOptions[ 0 ] );
-		};
+		return methods.map( renderMethod );
+	};
 
-		return [
-			...methods.map( renderMethod ),
-			<ListItem key={ methods.length }>
-				<ListItemField>
-					<Button onClick={ onAddMethod }>{ translate( 'Add method' ) }</Button>
-				</ListItemField>
-			</ListItem>
-		];
+	const onAddMethod = () => {
+		if ( ! loaded ) {
+			return;
+		}
+		onChange();
+		actions.addMethodToShippingZone( siteId, newMethodTypeOptions[ 0 ] );
 	};
 
 	return (
@@ -75,11 +71,9 @@ const ShippingZoneMethodList = ( { siteId, loaded, methods, newMethodTypeOptions
 			<ExtendedHeader
 				label={ translate( 'Shipping methods' ) }
 				description={ translate( 'Any customers that reside in the locations' +
-					' defined above will have access to these shipping methods' ) }
-				buttonText={ translate( 'Add method' ) }
-				buttonAction={ function() {
-					console.log( 'Button clicked' );
-				} } />
+					' defined above will have access to these shipping methods' ) } >
+				<Button onClick={ onAddMethod } disabled={ ! loaded } >{ translate( 'Add method' ) }</Button>
+			</ExtendedHeader>
 			<List>
 				<ListHeader>
 					<ListItemField className="shipping-zone__methods-column-title">
