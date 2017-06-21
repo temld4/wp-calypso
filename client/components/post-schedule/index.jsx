@@ -193,6 +193,7 @@ class PostSchedule extends Component {
 				<DatePicker
 					events={ this.events() }
 					locale={ this.locale() }
+					disabledDays={ this.props.disabledDays }
 					selectedDay={
 						this.state.localizedDate
 							? this.state.localizedDate.toDate()
