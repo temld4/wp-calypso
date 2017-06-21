@@ -19,10 +19,11 @@ const ShippingZoneEntry = ( { translate, id, name, methods, site } ) => {
 	const renderMethod = ( methodKey ) => {
 		const method = methods[ methodKey ];
 
+		//TODO: remove hardcoded currency data
 		return (
 			<div key={ methodKey } className="shipping__zones-row-method">
 				<p className="shipping__zones-row-method-name">{ method.title }</p>
-				<p className="shipping__zones-row-method-description">{ getMethodSummary( method ) }</p>
+				<p className="shipping__zones-row-method-description">{ getMethodSummary( method, '$' ) }</p>
 			</div>
 		);
 	};

@@ -43,13 +43,14 @@ const ShippingZoneMethodList = ( {
 	const renderMethod = ( method, index ) => {
 		const onEditClick = () => ( actions.openShippingZoneMethod( siteId, method.id ) );
 
+		//TODO: remove hardcoded currency data
 		return (
 			<ListItem key={ index } >
 				<ListItemField className="shipping-zone__method-title">
 					{ method.title }
 				</ListItemField>
 				<ListItemField className="shipping-zone__method-summary">
-					{ getMethodSummary( method ) }
+					{ getMethodSummary( method, '$' ) }
 				</ListItemField>
 				<ListItemField className="shipping-zone__method-actions">
 					<Button compact onClick={ onEditClick }>{ translate( 'Edit' ) }</Button>
