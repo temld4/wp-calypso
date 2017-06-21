@@ -10,18 +10,9 @@ import { localize } from 'i18n-calypso';
 import Button from 'components/button';
 import ExtendedHeader from 'woocommerce/components/extended-header';
 import List from 'woocommerce/components/list/list';
-import Spinner from 'components/spinner';
 
-const ShippingZoneLocations = ( { loaded, translate } ) => {
+const ShippingZoneLocations = ( { translate } ) => {
 	const renderContent = () => {
-		if ( ! loaded ) {
-			return (
-				<div className="shipping-zone__loading-spinner">
-					<Spinner size={ 24 } />
-				</div>
-			);
-		}
-
 		return null;
 	};
 

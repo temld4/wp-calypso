@@ -56,6 +56,37 @@
 		}
 	}
 
+	.list-item.is-placeholder {
+		@include placeholder();
+
+		.gridicon, p, a, span, button {
+			animation: loading-fade 1.6s ease-in-out infinite;
+			background-color: lighten( $gray, 25% );
+			color: transparent;
+			cursor: default;
+		}
+
+		p, span {
+			width: 100px;
+			height: 14px;
+			margin-right: 10px;
+		}
+
+		.gridicon {
+			fill: transparent;
+			stroke: transparent;
+		}
+
+		&:last-child {
+			background: lighten( $gray, 30% );
+			border-top: 0;
+		}
+
+		&:after {
+			display: none;
+		}
+	}
+
 	.list-item-field {
 		justify-content: left;
 		align-items: center;

@@ -17,7 +17,6 @@ import ListItem from 'woocommerce/components/list/list-item';
 import ListHeader from 'woocommerce/components/list/list-header';
 import ListItemField from 'woocommerce/components/list/list-item-field';
 import ShippingZoneMethodDialog from './shipping-zone-method-dialog';
-import Spinner from 'components/spinner';
 import { getMethodSummary } from './shipping-methods/utils';
 import {
 	getShippingMethodNameMap,
@@ -43,12 +42,30 @@ const ShippingZoneMethodList = ( {
 		actions,
 	} ) => {
 	const renderMethod = ( method, index ) => {
+		if ( ! loaded ) {
+			return (
+				<ListItem key={ index } className="shipping-zone__method is-placeholder" >
+					<ListItemField className="shipping-zone__method-title">
+						<span />
+					</ListItemField>
+					<ListItemField className="shipping-zone__method-summary">
+						<span />
+						<span />
+					</ListItemField>
+					<ListItemField className="shipping-zone__method-actions">
+						<span />
+						<Button compact >{ translate( 'Edit' ) }</Button>
+					</ListItemField>
+				</ListItem>
+			);
+		}
+
 		const onEditClick = () => ( actions.openShippingZoneMethod( siteId, method.id ) );
 		const onEnabledToggle = () => ( actions.toggleShippingZoneMethodEnabled( siteId, method.id, ! method.enabled ) );
 
 		//TODO: remove hardcoded currency data
 		return (
-			<ListItem key={ index } >
+			<ListItem key={ index } className="shipping-zone__method" >
 				<ListItemField className="shipping-zone__method-title">
 					{ method.title }
 				</ListItemField>
@@ -71,18 +88,6 @@ const ShippingZoneMethodList = ( {
 		);
 	};
 
-	const renderContent = () => {
-		if ( ! loaded ) {
-			return (
-				<div className="shipping-zone__loading-spinner">
-					<Spinner size={ 24 } />
-				</div>
-			);
-		}
-
-		return methods.map( renderMethod );
-	};
-
 	const onAddMethod = () => {
 		if ( ! loaded ) {
 			return;
@@ -92,6 +97,8 @@ const ShippingZoneMethodList = ( {
 		const newType = newMethodTypeOptions[ 0 ];
 		actions.addMethodToShippingZone( siteId, newType, methodNamesMap( newType ) );
 	};
+
+	const methodsToRender = loaded ? methods : [ {}, {}, {} ];
 
 	return (
 		<div className="shipping-zone__methods-container">
@@ -110,7 +117,7 @@ const ShippingZoneMethodList = ( {
 						{ translate( 'Details' ) }
 					</ListItemField>
 				</ListHeader>
-				{ renderContent() }
+				{ methodsToRender.map( renderMethod ) }
 			</List>
 			<ShippingZoneMethodDialog siteId={ siteId } onChange={ onChange } />
 		</div>
@@ -120,6 +127,7 @@ const ShippingZoneMethodList = ( {
 ShippingZoneMethodList.propTypes = {
 	siteId: PropTypes.number,
 	onChange: PropTypes.func.isRequired,
+	loaded: PropTypes.bool.isRequired,
 };
 
 export default connect(
