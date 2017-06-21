@@ -11,6 +11,7 @@ import { localize } from 'i18n-calypso';
  */
 import Button from 'components/button';
 import ExtendedHeader from 'woocommerce/components/extended-header';
+import FormToggle from 'components/forms/form-toggle/compact';
 import List from 'woocommerce/components/list/list';
 import ListItem from 'woocommerce/components/list/list-item';
 import ListHeader from 'woocommerce/components/list/list-header';
@@ -23,7 +24,8 @@ import {
 } from 'woocommerce/state/sites/shipping-methods/selectors';
 import {
 	openShippingZoneMethod,
-	addMethodToShippingZone
+	addMethodToShippingZone,
+	toggleShippingZoneMethodEnabled,
 } from 'woocommerce/state/ui/shipping/zones/methods/actions';
 import {
 	getCurrentlyEditingShippingZoneMethods,
@@ -42,6 +44,7 @@ const ShippingZoneMethodList = ( {
 	} ) => {
 	const renderMethod = ( method, index ) => {
 		const onEditClick = () => ( actions.openShippingZoneMethod( siteId, method.id ) );
+		const onEnabledToggle = () => ( actions.toggleShippingZoneMethodEnabled( siteId, method.id, ! method.enabled ) );
 
 		//TODO: remove hardcoded currency data
 		return (
@@ -53,6 +56,13 @@ const ShippingZoneMethodList = ( {
 					{ getMethodSummary( method, '$' ) }
 				</ListItemField>
 				<ListItemField className="shipping-zone__method-actions">
+					<span>
+						{ translate( 'Enabled {{toggle/}}', {
+							components: {
+								toggle: <FormToggle checked={ method.enabled } onChange={ onEnabledToggle } />
+							}
+						} ) }
+					</span>
 					<Button compact onClick={ onEditClick }>{ translate( 'Edit' ) }</Button>
 				</ListItemField>
 			</ListItem>
@@ -120,6 +130,7 @@ export default connect(
 		actions: bindActionCreators( {
 			openShippingZoneMethod,
 			addMethodToShippingZone,
+			toggleShippingZoneMethodEnabled,
 		}, dispatch )
 	} )
 )( localize( ShippingZoneMethodList ) );
