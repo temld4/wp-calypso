@@ -222,14 +222,15 @@ $date-picker_nav_button_size: 20px;
 }
 
 // `is-selected` day (not today -> adds animation)
-.DayPicker-Day.DayPicker-Day--is-selected:not(.DayPicker-Day--today) .date-picker__day {
+.DayPicker-Day.DayPicker-Day--is-selected:not(.DayPicker-Day--today):not(.DayPicker-Day--events) .date-picker__day {
 	color: $white;
 	animation: isSelectedDay 125ms ease-out;
 	background-color: $blue-medium;
 }
 
 // `is-selected` day (today -> no animation)
-.DayPicker-Day.DayPicker-Day--is-selected.DayPicker-Day--today .date-picker__day {
+.DayPicker-Day.DayPicker-Day--is-selected.DayPicker-Day--today .date-picker__day,
+.DayPicker-Day.DayPicker-Day--is-selected.DayPicker-Day--events .date-picker__day {
 	color: $white;
 	background-color: $blue-medium;
 }
