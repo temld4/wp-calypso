@@ -19,9 +19,10 @@ import ShippingPackageList from './shipping-package-list';
 import ShippingZoneList from './shipping-zone-list';
 
 const Shipping = ( { className, site, translate } ) => {
-	const breadcrumbs = ( <span>
-		<a href={ getLink( '/store/:site/', site ) }>{ translate( 'Settings' ) }</a> &gt; { translate( 'Shipping' ) }
-	</span> );
+	const breadcrumbs = [
+		( <a href={ getLink( '/store/:site/', site ) }>{ translate( 'Settings' ) }</a> ),
+		( <span>{ translate( 'Shipping' ) }</span> ),
+	];
 	return (
 		<Main className={ classNames( 'shipping', className ) }>
 			<ActionHeader breadcrumbs={ breadcrumbs } />
