@@ -22,17 +22,19 @@ class ActivityLogItem extends Component {
 		requestRestore: PropTypes.func.isRequired,
 
 		log: PropTypes.shape( {
+			group: PropTypes.string,
+			name: PropTypes.string.isRequired,
 			ts_site: PropTypes.number.isRequired,
 			ts_utc: PropTypes.number.isRequired,
-			name: PropTypes.string.isRequired,
 
 			actor: PropTypes.shape( {
 				display_name: PropTypes.string,
 				login: PropTypes.string,
+				translated_role: PropTypes.string,
 				user_email: PropTypes.string,
+				user_roles: PropTypes.string,
 				wpcom_user_id: PropTypes.number,
 			} ),
-			group: PropTypes.string,
 
 			object: PropTypes.shape( {
 				post: PropTypes.shape( {
@@ -87,7 +89,9 @@ class ActivityLogItem extends Component {
 		);
 		let icon = 'info-outline';
 		switch ( log.name ) {
-			case
+			case '':
+				icon = icon;
+				break;
 		}
 
 		return (
@@ -97,35 +101,39 @@ class ActivityLogItem extends Component {
 		);
 	}
 
-	getActor() {
-		const {
-			user
-		} = this.props;
+	getStatus() {
+	}
 
-		if ( ! user ) {
+	getActor() {
+		const { log } = this.props;
+		const { actor } = log;
+
+		if ( ! actor || ! actor.wpcom_user_id ) {
 			return null;
 		}
 
 		return (
 			<div className="activity-log-item__actor">
-				<Gravatar user={ user } size={ 48 } />
+				<Gravatar user={ { ID: actor.wpcom_user_id, display_name: actor.display_name } } size={ 48 } />
 				<div className="activity-log-item__actor-info">
-					<div className="activity-log-item__actor-name">{ user.name }</div>
-					<div className="activity-log-item__actor-role">{ user.role }</div>
+					<div className="activity-log-item__actor-name">{ actor.display_name }</div>
+					<div className="activity-log-item__actor-role">{ actor.translated_role }</div>
 				</div>
 			</div>
 		);
 	}
 
 	getContent() {
+		const { log } = this.props;
 		const {
-			title,
-			subTitle
-		} = this.props;
+			name,
+		} = log;
+
+		const subTitle = null;
 
 		return (
 			<div className="activity-log-item__content">
-				<div className="activity-log-item__content-title">{ title }</div>
+				<div className="activity-log-item__content-title">{ name }</div>
 				{ subTitle && <div className="activity-log-item__content-sub-title">{ subTitle }</div> }
 			</div>
 		);
@@ -164,7 +172,7 @@ class ActivityLogItem extends Component {
 	render() {
 		const {
 			className,
-			description
+			description,
 		} = this.props;
 
 		const classes = classNames(
