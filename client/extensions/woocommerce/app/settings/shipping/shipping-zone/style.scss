@@ -205,6 +205,10 @@
 	.form-currency-input {
 		padding: 4px 8px;
 	}
+
+	input:disabled {
+		border-color: lighten( $gray, 20% );
+	}
 }
 
 .shipping-methods__checkbox {
