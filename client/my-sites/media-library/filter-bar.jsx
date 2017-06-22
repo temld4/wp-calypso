@@ -6,7 +6,6 @@ import { localize } from 'i18n-calypso';
 import {
 	includes,
 	noop,
-	map,
 	identity
 } from 'lodash';
 
@@ -19,6 +18,7 @@ import Search from 'components/search';
 import TrackComponentView from 'lib/analytics/track-component-view';
 import PlanStorage from 'blocks/plan-storage';
 import FilterItem from './filter-item';
+import TitleItem from './title-item';
 
 export class MediaLibraryFilterBar extends Component {
 	static propTypes = {
@@ -85,38 +85,43 @@ export class MediaLibraryFilterBar extends Component {
 		this.props.onFilterChange( filter );
 	};
 
-	changeSource = source => {
-		this.props.onSourceChange( source );
+	changeSource = choice => {
+		this.props.onSourceChange( choice.value );
 	};
 
-	renderTabItems() {
-		const tabs = this.props.source === '' ? [ '', 'images', 'documents', 'videos', 'audio' ] : [];
+	renderSectionTitle() {
+		const { translate } = this.props;
 
-		return map( tabs, filter =>
-			<FilterItem
-				key={ 'filter-tab-' + filter }
-				value={ filter }
-				selected={ this.props.filter === filter }
-				onChange={ this.changeFilter }
-				disabled={ this.isFilterDisabled( filter ) }
-			>
-				{ this.getFilterLabel( filter ) }
-			</FilterItem>
-		);
+		if ( this.props.source === 'google_photos' ) {
+			return <TitleItem>{ translate( 'Photos from Google' ) }</TitleItem>;
+		}
+
+		return null;
 	}
 
-	renderSourceItem() {
-		const nextService = this.props.source === '' ? 'google_photos' : '';
-		const { translate } = this.props;
-		const services = {
-			'': 'WordPress',
-			google_photos: translate( 'Photos from Google' ),
-		};
+	renderTabItems() {
+		if ( this.props.source !== '' ) {
+			return null;
+		}
+
+		const tabs = [ '', 'images', 'documents', 'videos', 'audio' ];
 
 		return (
-			<FilterItem onChange={ this.changeSource } value={ nextService }>
-				{ services[ this.props.source ] }
-			</FilterItem>
+			<SectionNavTabs>
+				{
+					tabs.map( filter =>
+						<FilterItem
+							key={ 'filter-tab-' + filter }
+							value={ filter }
+							selected={ this.props.filter === filter }
+							onChange={ this.changeFilter }
+							disabled={ this.isFilterDisabled( filter ) }
+						>
+							{ this.getFilterLabel( filter ) }
+						</FilterItem>
+					)
+				}
+			</SectionNavTabs>
 		);
 	}
 
@@ -151,12 +156,11 @@ export class MediaLibraryFilterBar extends Component {
 		return (
 			<div className="media-library__filter-bar">
 				<SectionNav selectedText={ this.getFilterLabel( this.props.filter ) } hasSearch={ true }>
-					<SectionNavTabs>
-						{ this.renderSourceItem() }
-						{ this.renderTabItems() }
-					</SectionNavTabs>
+					{ this.renderSectionTitle() }
+					{ this.renderTabItems() }
 					{ this.renderSearchSection() }
 				</SectionNav>
+
 				{ this.renderPlanStorage() }
 			</div>
 		);
