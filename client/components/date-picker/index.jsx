@@ -3,7 +3,7 @@
  */
 import React, { PropTypes, PureComponent } from 'react';
 import DayPicker from 'react-day-picker';
-import { noop, merge } from 'lodash';
+import { noop, merge, map } from 'lodash';
 import { localize } from 'i18n-calypso';
 
 /**
@@ -127,12 +127,21 @@ class DatePicker extends PureComponent {
 	};
 
 	render() {
+		const modifiers = { 'past-days': { before: new Date() } };
+
+		if ( this.props.selectedDay ) {
+			modifiers[ 'is-selected' ] = this.props.selectedDay instanceof Date
+				? this.props.selectedDay
+				: this.props.selectedDay.toDate();
+		}
+
+		if ( this.props.events && this.props.events.length ) {
+			modifiers.events = map( this.props.events, event => event.date );
+		}
+
 		return (
 			<DayPicker
-				modifiers= { {
-					'is-selected': this.props.selectedDay,
-					'past-days': { before: new Date() }
-				} }
+				modifiers= { modifiers }
 				ref="daypicker"
 				className="date-picker"
 				disabledDays={ this.props.disabledDays }
