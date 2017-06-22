@@ -9,28 +9,26 @@ import { connect } from 'react-redux';
 /**
  * Internal dependencies
  */
-import FormCurrencyInput from 'components/forms/form-currency-input';
 import FormFieldSet from 'components/forms/form-fieldset';
 import FormLabel from 'components/forms/form-label';
 import FormRadio from 'components/forms/form-radio';
 import FormSelect from 'components/forms/form-select';
+import PriceInput from 'woocommerce/components/price-input';
 import {
 	setFreeShippingCondition,
 	setFreeShippingMinCost
 } from 'woocommerce/state/ui/shipping/zones/methods/free-shipping/actions';
 
-const FreeShippingMethod = ( { id, siteId, requires, min_amount, translate, actions } ) => {
+const FreeShippingMethod = ( { id, siteId, requires, min_amount, currency, translate, actions } ) => {
 	const onConditionChange = ( event ) => ( actions.setFreeShippingCondition( siteId, id, event.target.value ) );
 	const onMinAmountChange = ( event ) => ( actions.setFreeShippingMinCost( siteId, id, event.target.value ) );
 
 	const isAdvancedSettings = 'coupon' === requires || 'either' === requires || 'both' === requires;
 
 	const renderMinSpendInput = () => (
-		//TODO: remove hardcoded currency settings
-		<FormCurrencyInput
-			currencySymbolPrefix={ '$' }
-			currencySymbolSuffix={ '' }
+		<PriceInput
 			value={ min_amount }
+			currency={ currency }
 			disabled={ ! requires }
 			onChange={ onMinAmountChange } />
 	);
@@ -95,7 +93,8 @@ FreeShippingMethod.propTypes = {
 	siteId: PropTypes.number,
 	id: PropTypes.oneOfType( [ PropTypes.number, PropTypes.object ] ),
 	requires: PropTypes.string,
-	min_amount: PropTypes.oneOfType( [ PropTypes.number, PropTypes.string ] )
+	min_amount: PropTypes.oneOfType( [ PropTypes.number, PropTypes.string ] ),
+	currency: PropTypes.string,
 };
 
 export default connect(

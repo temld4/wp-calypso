@@ -13,6 +13,8 @@ import Button from 'components/button';
 import Card from 'components/card';
 import ExtendedHeader from 'woocommerce/components/extended-header';
 import ShippingZoneEntry from './shipping-zone-list-entry';
+import { fetchSettingsGeneral } from 'woocommerce/state/sites/settings/general/actions';
+import { areSettingsGeneralLoaded } from 'woocommerce/state/sites/settings/general/selectors';
 import { fetchShippingZones } from 'woocommerce/state/sites/shipping-zones/actions';
 import { areShippingZonesLoaded } from 'woocommerce/state/sites/shipping-zones/selectors';
 import { getLink } from 'woocommerce/lib/nav-utils';
@@ -23,6 +25,7 @@ class ShippingZoneList extends Component {
 	componentWillMount() {
 		if ( this.props.siteId ) {
 			this.props.actions.fetchShippingZones( this.props.siteId );
+			this.props.actions.fetchSettingsGeneral( this.props.siteId );
 		}
 	}
 
@@ -32,6 +35,7 @@ class ShippingZoneList extends Component {
 		}
 
 		this.props.actions.fetchShippingZones( siteId );
+		this.props.actions.fetchSettingsGeneral( siteId );
 	}
 
 	renderContent() {
@@ -94,11 +98,12 @@ export default connect(
 		site: getSelectedSite( state ),
 		siteId: getSelectedSiteId( state ),
 		shippingZones: getShippingZones( state ),
-		loaded: areShippingZonesLoaded( state )
+		loaded: areSettingsGeneralLoaded( state ) && areShippingZonesLoaded( state ),
 	} ),
 	( dispatch ) => ( {
 		actions: bindActionCreators( {
-			fetchShippingZones
+			fetchShippingZones,
+			fetchSettingsGeneral,
 		}, dispatch )
 	} )
 )( localize( ShippingZoneList ) );

@@ -30,6 +30,7 @@ import {
 	getCurrentlyEditingShippingZoneMethods,
 	getNewMethodTypeOptions,
 } from 'woocommerce/state/ui/shipping/zones/methods/selectors';
+import { getCurrencyWithEdits } from 'woocommerce/state/ui/payments/currency/selectors';
 
 const ShippingZoneMethodList = ( {
 		siteId,
@@ -37,6 +38,7 @@ const ShippingZoneMethodList = ( {
 		methods,
 		methodNamesMap,
 		newMethodTypeOptions,
+		currency,
 		translate,
 		onChange,
 		actions,
@@ -65,14 +67,13 @@ const ShippingZoneMethodList = ( {
 		const onEditClick = () => ( actions.openShippingZoneMethod( siteId, method.id ) );
 		const onEnabledToggle = () => ( actions.toggleShippingZoneMethodEnabled( siteId, method.id, ! method.enabled ) );
 
-		//TODO: remove hardcoded currency data
 		return (
 			<ListItem key={ index } className="shipping-zone__method" >
 				<ListItemField className="shipping-zone__method-title">
 					{ method.title }
 				</ListItemField>
 				<ListItemField className="shipping-zone__method-summary">
-					{ getMethodSummary( method, '$' ) }
+					{ getMethodSummary( method, currency ) }
 				</ListItemField>
 				<ListItemField className="shipping-zone__enable-container">
 					<span>
@@ -137,6 +138,7 @@ export default connect(
 		methods: getCurrentlyEditingShippingZoneMethods( state ),
 		methodNamesMap: getShippingMethodNameMap( state ),
 		newMethodTypeOptions: getNewMethodTypeOptions( state ),
+		currency: getCurrencyWithEdits( state ),
 	} ),
 	( dispatch ) => ( {
 		actions: bindActionCreators( {

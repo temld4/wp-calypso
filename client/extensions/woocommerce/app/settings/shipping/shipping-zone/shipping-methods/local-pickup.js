@@ -9,16 +9,16 @@ import { connect } from 'react-redux';
 /**
  * Internal dependencies
  */
-import FormCurrencyInput from 'components/forms/form-currency-input';
 import FormCheckbox from 'components/forms/form-checkbox';
 import FormFieldSet from 'components/forms/form-fieldset';
 import FormLabel from 'components/forms/form-label';
+import PriceInput from 'woocommerce/components/price-input';
 import {
 	setShippingIsTaxable,
 	setShippingCost
 } from 'woocommerce/state/ui/shipping/zones/methods/local-pickup/actions';
 
-const LocalPickupMethod = ( { id, siteId, cost, tax_status, translate, actions } ) => {
+const LocalPickupMethod = ( { id, siteId, cost, tax_status, currency, translate, actions } ) => {
 	const isTaxable = 'taxable' === tax_status;
 	const onTaxableChange = () => ( actions.setShippingIsTaxable( siteId, id, ! isTaxable ) );
 	const onCostChange = ( event ) => ( actions.setShippingCost( siteId, id, event.target.value ) );
@@ -27,9 +27,8 @@ const LocalPickupMethod = ( { id, siteId, cost, tax_status, translate, actions }
 		<div className="shipping-methods__method-container shipping-methods__local-pickup">
 			<FormFieldSet>
 				<FormLabel>{ translate( 'How much will you charge for local pickup?' ) }</FormLabel>
-				<FormCurrencyInput
-					currencySymbolPrefix="$"
-					currencySymbolSuffix=""
+				<PriceInput
+					currency={ currency }
 					value={ cost }
 					onChange={ onCostChange } />
 			</FormFieldSet>
@@ -48,7 +47,8 @@ LocalPickupMethod.propTypes = {
 	siteId: PropTypes.number,
 	id: PropTypes.oneOfType( [ PropTypes.number, PropTypes.object ] ),
 	cost: PropTypes.oneOfType( [ PropTypes.number, PropTypes.string ] ),
-	tax_status: PropTypes.string
+	tax_status: PropTypes.string,
+	currency: PropTypes.string,
 };
 
 export default connect(

@@ -14,8 +14,9 @@ import { getLink } from 'woocommerce/lib/nav-utils';
 import { getMethodSummary } from './shipping-zone/shipping-methods/utils';
 import { getSelectedSite } from 'state/ui/selectors';
 import { getShippingZoneMethods } from 'woocommerce/state/ui/shipping/zones/methods/selectors';
+import { getCurrencyWithEdits } from 'woocommerce/state/ui/payments/currency/selectors';
 
-const ShippingZoneEntry = ( { translate, id, name, methods, loaded, site } ) => {
+const ShippingZoneEntry = ( { translate, id, name, methods, currency, loaded, site } ) => {
 	if ( ! loaded ) {
 		return (
 			<div className="shipping__zones-row is-placeholder">
@@ -50,7 +51,7 @@ const ShippingZoneEntry = ( { translate, id, name, methods, loaded, site } ) => 
 		return (
 			<div key={ methodKey } className="shipping__zones-row-method">
 				<p className="shipping__zones-row-method-name">{ method.title }</p>
-				<p className="shipping__zones-row-method-description">{ getMethodSummary( method, '$' ) }</p>
+				<p className="shipping__zones-row-method-description">{ getMethodSummary( method, currency ) }</p>
 			</div>
 		);
 	};
@@ -86,5 +87,6 @@ export default connect(
 	( state, ownProps ) => ( {
 		site: getSelectedSite( state ),
 		methods: ownProps.loaded && getShippingZoneMethods( state, ownProps.id ),
+		currency: ownProps.loaded && getCurrencyWithEdits( state ),
 	} )
 )( localize( ShippingZoneEntry ) );

@@ -35,6 +35,7 @@ import {
 	getCurrentlyOpenShippingZoneMethod,
 	isCurrentlyOpenShippingZoneMethodNew,
 } from 'woocommerce/state/ui/shipping/zones/methods/selectors';
+import { getCurrencyWithEdits } from 'woocommerce/state/ui/payments/currency/selectors';
 
 const ShippingZoneDialog = ( {
 		siteId,
@@ -44,6 +45,7 @@ const ShippingZoneDialog = ( {
 		translate,
 		isVisible,
 		isNew,
+		currency,
 		onChange,
 		actions
 	} ) => {
@@ -83,11 +85,11 @@ const ShippingZoneDialog = ( {
 	const renderMethodSettingsView = () => {
 		switch ( method.methodType ) {
 			case 'flat_rate':
-				return <FlatRate siteId={ siteId } { ...method } />;
+				return <FlatRate siteId={ siteId } currency={ currency } { ...method } />;
 			case 'free_shipping':
-				return <FreeShipping siteId={ siteId } { ...method } />;
+				return <FreeShipping siteId={ siteId } currency={ currency } { ...method } />;
 			case 'local_pickup':
-				return <LocalPickup siteId={ siteId } { ...method } />;
+				return <LocalPickup siteId={ siteId } currency={ currency } { ...method } />;
 			default:
 				return null;
 		}
@@ -163,6 +165,7 @@ export default connect(
 			isNew: method && isCurrentlyOpenShippingZoneMethodNew( state ),
 			methodNamesMap: getShippingMethodNameMap( state ),
 			methodTypeOptions: method && getMethodTypeChangeOptions( state, method.methodType ),
+			currency: getCurrencyWithEdits( state ),
 		};
 	},
 	( dispatch ) => ( {

@@ -10,27 +10,25 @@ import { connect } from 'react-redux';
  * Internal dependencies
  */
 import FormCheckbox from 'components/forms/form-checkbox';
-import FormCurrencyInput from 'components/forms/form-currency-input';
 import FormFieldSet from 'components/forms/form-fieldset';
 import FormLabel from 'components/forms/form-label';
+import PriceInput from 'woocommerce/components/price-input';
 import {
 	setShippingIsTaxable,
 	setShippingCost
 } from 'woocommerce/state/ui/shipping/zones/methods/flat-rate/actions';
 
-const FreeShippingMethod = ( { id, siteId, cost, tax_status, translate, actions } ) => {
+const FreeShippingMethod = ( { id, siteId, cost, tax_status, currency, translate, actions } ) => {
 	const isTaxable = 'taxable' === tax_status;
 	const onTaxableChange = () => ( actions.setShippingIsTaxable( siteId, id, ! isTaxable ) );
 	const onCostChange = ( event ) => ( actions.setShippingCost( siteId, id, event.target.value ) );
 
-	const renderCostInput = () => {
-		//TODO: remove hardcoded currency settings
-		return <FormCurrencyInput
-			currencySymbolPrefix={ '$' }
-			currencySymbolSuffix={ '' }
+	const renderCostInput = () => (
+		<PriceInput
+			currency={ currency }
 			value={ cost }
-			onChange={ onCostChange } />;
-	};
+			onChange={ onCostChange } />
+	);
 
 	return (
 		<div>
@@ -53,7 +51,8 @@ FreeShippingMethod.propTypes = {
 	siteId: PropTypes.number,
 	id: PropTypes.oneOfType( [ PropTypes.number, PropTypes.object ] ),
 	cost: PropTypes.oneOfType( [ PropTypes.number, PropTypes.string ] ),
-	tax_status: PropTypes.string
+	tax_status: PropTypes.string,
+	currency: PropTypes.string,
 };
 
 export default connect(

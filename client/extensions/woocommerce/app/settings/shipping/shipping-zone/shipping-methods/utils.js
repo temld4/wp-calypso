@@ -3,29 +3,28 @@
  */
 import { translate } from 'i18n-calypso';
 
-export const getMethodSummary = ( method, currencyPrefix = '', currencySuffix = '' ) => {
+/**
+ * Internal dependencies
+ */
+import formatCurrency from 'lib/format-currency';
+
+export const getMethodSummary = ( method, currency ) => {
 	switch ( method.methodType ) {
 		case 'flat_rate':
-			return translate( 'Cost: %(prefix)s%(cost)s%(suffix)s', { args: {
-				prefix: currencyPrefix,
-				cost: method.cost,
-				suffix: currencySuffix,
+			return translate( 'Cost: %(cost)s', { args: {
+				cost: formatCurrency( method.cost, currency ) || method.cost,
 			} } );
 		case 'free_shipping':
 			if ( ! method.requires ) {
 				return translate( 'For everyone' );
 			}
 
-			return translate( 'Minimum order amount: %(prefix)s%(cost)s%(suffix)s', { args: {
-				prefix: currencyPrefix,
-				cost: method.min_amount,
-				suffix: currencySuffix,
+			return translate( 'Minimum order amount: %(cost)s', { args: {
+				cost: formatCurrency( method.min_amount, currency ) || method.min_amount,
 			} } );
 		case 'local_pickup':
-			return translate( 'Cost: %(prefix)s%(cost)s%(suffix)s', { args: {
-				prefix: currencyPrefix,
-				cost: method.cost,
-				suffix: currencySuffix,
+			return translate( 'Cost: %(cost)s', { args: {
+				cost: formatCurrency( method.cost, currency ) || method.cost,
 			} } );
 		default:
 			return '';
