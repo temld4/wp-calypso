@@ -53,6 +53,7 @@
 .shipping__zones-row {
 	&.is-placeholder {
 		@include placeholder();
+		pointer-events: none;
 
 		.gridicon, p, a, button {
 			animation: loading-fade 1.6s ease-in-out infinite;

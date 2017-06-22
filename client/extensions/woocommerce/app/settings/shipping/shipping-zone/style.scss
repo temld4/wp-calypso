@@ -58,6 +58,7 @@
 
 	.list-item.is-placeholder {
 		@include placeholder();
+		pointer-events: none;
 
 		.gridicon, p, a, span, button {
 			animation: loading-fade 1.6s ease-in-out infinite;
