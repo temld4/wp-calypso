@@ -139,7 +139,7 @@ class DatePicker extends PureComponent {
 		}
 
 		if ( this.props.events && this.props.events.length ) {
-			modifiers.events = map( this.props.events, event => event.date );
+			modifiers.events = map( this.props.events, event => event.date instanceof Date ? event.date : event.date.toDate() );
 		}
 
 		return (
