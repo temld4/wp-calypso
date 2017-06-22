@@ -291,6 +291,7 @@ class PostShare extends Component {
 						events={ actionsEvents }
 						className="post-share__schedule-button"
 						disabled={ this.isDisabled() }
+						disabledDays={ [ { before: new Date() } ] }
 						title={ translate( 'Set date and time' ) }
 						selectedDay={ this.state.scheduledDate }
 						tabIndex={ 3 }
