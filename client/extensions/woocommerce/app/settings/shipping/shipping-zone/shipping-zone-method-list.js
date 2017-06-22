@@ -52,8 +52,10 @@ const ShippingZoneMethodList = ( {
 						<span />
 						<span />
 					</ListItemField>
-					<ListItemField className="shipping-zone__method-actions">
+					<ListItemField className="shipping-zone__enable-container">
 						<span />
+					</ListItemField>
+					<ListItemField className="shipping-zone__method-actions">
 						<Button compact >{ translate( 'Edit' ) }</Button>
 					</ListItemField>
 				</ListItem>

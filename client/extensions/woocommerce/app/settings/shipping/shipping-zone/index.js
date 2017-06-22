@@ -13,12 +13,14 @@ import Main from 'components/main';
 import ShippingZoneHeader from './shipping-zone-header';
 import ShippingZoneLocations from './shipping-zone-locations';
 import ShippingZoneMethodList from './shipping-zone-method-list';
+import { fetchShippingMethods } from 'woocommerce/state/sites/shipping-methods/actions';
 import { fetchShippingZones } from 'woocommerce/state/sites/shipping-zones/actions';
 import {
 	addNewShippingZone,
 	openShippingZoneForEdit
 } from 'woocommerce/state/ui/shipping/zones/actions';
 import { areShippingZonesLoaded } from 'woocommerce/state/sites/shipping-zones/selectors';
+import { areShippingMethodsLoaded } from 'woocommerce/state/sites/shipping-methods/selectors';
 import { getSelectedSiteId } from 'state/ui/selectors';
 import { protectForm } from 'lib/protect-form';
 
@@ -29,6 +31,7 @@ class Shipping extends Component {
 		if ( siteId ) {
 			if ( ! loaded ) {
 				actions.fetchShippingZones( siteId );
+				actions.fetchShippingMethods( siteId );
 			} else if ( isNaN( params.zone ) ) {
 				actions.addNewShippingZone( siteId );
 			} else {
@@ -43,6 +46,7 @@ class Shipping extends Component {
 		//site ID changed, fetch new zones
 		if ( siteId !== this.props.siteId ) {
 			actions.fetchShippingZones( siteId );
+			actions.fetchShippingMethods( siteId );
 		}
 
 		//zones loaded, either open one for edit or add new
@@ -76,12 +80,13 @@ Shipping.propTypes = {
 export default connect(
 	( state ) => ( {
 		siteId: getSelectedSiteId( state ),
-		loaded: areShippingZonesLoaded( state ),
+		loaded: areShippingMethodsLoaded( state ) && areShippingZonesLoaded( state ),
 	} ),
 	( dispatch ) => ( {
 		actions: bindActionCreators(
 			{
 				fetchShippingZones,
+				fetchShippingMethods,
 				addNewShippingZone,
 				openShippingZoneForEdit
 			}, dispatch
