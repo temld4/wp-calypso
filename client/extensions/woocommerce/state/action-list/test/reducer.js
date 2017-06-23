@@ -9,7 +9,7 @@ import { expect } from 'chai';
 import reducer from '../reducer';
 
 import {
-	actionListCreate,
+	actionListSet,
 	actionListClear,
 	actionListStepAnnotate,
 } from '../actions';
@@ -19,7 +19,7 @@ describe( 'reducer', () => {
 		expect( reducer( undefined, { type: 'DUMMY_ACTION' } ) ).to.equal( null );
 	} );
 
-	it( 'should create an action list', () => {
+	it( 'should set an action list', () => {
 		const actionList = {
 			steps: [
 				{ description: 'Do Step 1', action: { type: '%%1%%', id: 1 } },
@@ -30,7 +30,7 @@ describe( 'reducer', () => {
 			failureAction: { type: '%%FAILURE%%' },
 		};
 
-		expect( reducer( undefined, actionListCreate( actionList ) ) ).to.equal( actionList );
+		expect( reducer( undefined, actionListSet( actionList ) ) ).to.equal( actionList );
 	} );
 
 	it( 'should annotate a step', () => {
@@ -46,7 +46,7 @@ describe( 'reducer', () => {
 			],
 		};
 
-		const state1 = reducer( undefined, actionListCreate( actionList ) );
+		const state1 = reducer( undefined, actionListSet( actionList ) );
 		const state2 = reducer( state1, actionListStepAnnotate( 0, { startTime: step0Start } ) );
 		const state3 = reducer( state2, actionListStepAnnotate( 0, { endTime: step0End, error: step0Error } ) );
 
@@ -69,7 +69,7 @@ describe( 'reducer', () => {
 			failureAction: { type: '%%FAILURE%%' },
 		};
 
-		const state1 = reducer( undefined, actionListCreate( actionList ) );
+		const state1 = reducer( undefined, actionListSet( actionList ) );
 		const state2 = reducer( state1, actionListClear() );
 
 		expect( state1 ).to.equal( actionList );

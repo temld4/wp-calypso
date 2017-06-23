@@ -4,7 +4,7 @@
  */
 import {
 	WOOCOMMERCE_ACTION_LIST_ANNOTATE,
-	WOOCOMMERCE_ACTION_LIST_CREATE,
+	WOOCOMMERCE_ACTION_LIST_SET,
 	WOOCOMMERCE_ACTION_LIST_CLEAR,
 	WOOCOMMERCE_ACTION_LIST_STEP_NEXT,
 	WOOCOMMERCE_ACTION_LIST_STEP_SUCCESS,
@@ -12,14 +12,14 @@ import {
 } from '../action-types';
 
 /**
- * Action Creator: Create new Action List.
+ * Action Creator: Set the Action List.
  *
  * @param {Object} actionList The sequential actionList to be carried out
  * @return {Object} action
  */
-export function actionListCreate( actionList ) {
+export function actionListSet( actionList ) {
 	return {
-		type: WOOCOMMERCE_ACTION_LIST_CREATE,
+		type: WOOCOMMERCE_ACTION_LIST_SET,
 		actionList,
 	};
 }

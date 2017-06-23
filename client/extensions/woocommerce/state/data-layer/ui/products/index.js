@@ -16,7 +16,7 @@ import { getAllProductCategoryEdits } from 'woocommerce/state/ui/product-categor
 import { createProduct } from 'woocommerce/state/sites/products/actions';
 import { createProductCategory } from 'woocommerce/state/sites/product-categories/actions';
 import {
-	actionListCreate,
+	actionListSet,
 	actionListStepSuccess,
 	actionListStepFailure
 } from 'woocommerce/state/action-list/actions';
@@ -60,7 +60,7 @@ export function handleProductActionListCreate( { dispatch, getState }, action ) 
 	const { successAction, failureAction } = action;
 	const actionList = makeProductActionList( getState(), undefined, undefined, successAction, failureAction );
 
-	dispatch( actionListCreate( actionList ) );
+	dispatch( actionListSet( actionList ) );
 }
 
 export function handleProductCategoryUpdated( { dispatch, getState }, action ) {
@@ -72,8 +72,7 @@ export function handleProductCategoryUpdated( { dispatch, getState }, action ) {
 		const placeholderId = originatingAction.id;
 		const realId = action.data.id;
 		const newActionList = updateActionListCategoryId( actionList, placeholderId, realId );
-		// TODO: "create" should be "set" here.
-		dispatch( actionListCreate( newActionList ) );
+		dispatch( actionListSet( newActionList ) );
 	}
 }
 
